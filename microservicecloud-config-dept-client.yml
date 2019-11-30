@@ -1,0 +1,44 @@
+spring:
+  profiles:
+    active:
+    - dev   
+---
+server:
+  port: 8001
+spring:
+  profiles: dev
+  application:
+    name: microservicecloud-config-dept-client
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource                  # 当前数据源操作类型
+    driver-class-name: org.gjt.mm.mysql.Driver                    # mysql 驱动包
+    url: jdbc:mysql://127.0.0.1:3306/cloudDB01?useSSL=false                    # 数据库名称
+    username: root
+    password: 123456
+    dbcp2:
+      min-idle: 5                                                 # 数据库连接池最小维持的连接数
+      initial-size: 5                                             # 初始化连接数
+      max-total: 10                                               # 最大连接数
+      max-wait-millis: 200
+      
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml              # mybatis 配置文件所在路径
+  type-aliases-package: com.hhf.springcloud.entities              # 所有 entity 别名所在的包
+  mapper-locations:
+  - classpath:mybatis/mapper/**/*.xml
+  
+  
+eureka:
+  client:   #客户端注册进服务器列表里
+    service-url:     #Eureka服务端集群地址,该服务会根据这写地址注册进Eureka服务端中
+      defaultZone: http://eureka7001.com:7001/eureka/
+  instance:
+    instance-id: microservice-dept8001 #在Eureka服务端中显示的名字
+    prefer-ip-address: true #在Eureka服务端鼠标移上链接时左下角显示ip地址
+    
+    
+info:  #点击Eureka服务端链接获取该微服务的信息(info)
+  app.name: microserviceHHF
+  company.name: www.baidu.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
